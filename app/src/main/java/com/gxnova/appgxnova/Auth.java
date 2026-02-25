@@ -22,11 +22,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Auth extends AppCompatActivity {
 
     private Button btnLogin, btnRegister;
     private TextView tabLogin, tabRegister, txtNombreCedula, txtNombreSelfie, txtNoCuenta;
-    private EditText regPass, regPassConfirm;
+    private EditText etEmailLogin, etPassLogin, etNombre, etApellido, etCelular, etEmailReg, regPass, regPassConfirm;
     private LinearLayout layoutLogin, layoutRegister;
     private View indicatorLogin, indicatorRegister;
     private RelativeLayout areaCedula, areaSelfie;
@@ -47,19 +51,75 @@ public class Auth extends AppCompatActivity {
 
         txtNoCuenta.setOnClickListener(v -> tabRegister.performClick());
 
+        // LÓGICA DE LOGIN
         btnLogin.setOnClickListener(v -> {
-            startActivity(new Intent(this, Inicio.class));
-            finish();
+            String email = etEmailLogin.getText().toString().trim();
+            String pass = etPassLogin.getText().toString().trim();
+
+            if (email.isEmpty() || pass.isEmpty()) {
+                Toast.makeText(this, "Por favor complete los datos", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            LoginRequest loginRequest = new LoginRequest(email, pass);
+            RetrofitClient.getApiService().loginUsuario(loginRequest).enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Toast.makeText(Auth.this, "Bienvenido " + response.body().getNombre(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Auth.this, Inicio.class));
+                        finish();
+                    } else {
+                        Toast.makeText(Auth.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    Toast.makeText(Auth.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
 
+        // LÓGICA DE REGISTRO
         btnRegister.setOnClickListener(v -> {
+            String pass = regPass.getText().toString();
+            String passConfirm = regPassConfirm.getText().toString();
+
             if (!checkTerms.isChecked()) {
                 Toast.makeText(this, "Debe aceptar los términos", Toast.LENGTH_SHORT).show();
-            } else if (regPass.getText().toString().isEmpty() || !regPass.getText().toString().equals(regPassConfirm.getText().toString())) {
+            } else if (pass.isEmpty() || !pass.equals(passConfirm)) {
                 Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            } else if (etNombre.getText().toString().isEmpty() || etEmailReg.getText().toString().isEmpty()) {
+                Toast.makeText(this, "Nombre y Email son obligatorios", Toast.LENGTH_SHORT).show();
             } else {
-                startActivity(new Intent(this, Inicio.class));
-                finish();
+                ejecutarRegistro();
+            }
+        });
+    }
+
+    private void ejecutarRegistro() {
+        RegisterRequest request = new RegisterRequest(
+                etNombre.getText().toString().trim(),
+                etApellido.getText().toString().trim(),
+                etCelular.getText().toString().trim(),
+                spinnerBusqueda.getSelectedItem().toString(),
+                etEmailReg.getText().toString().trim(),
+                regPass.getText().toString()
+        );
+
+        RetrofitClient.getApiService().registrarUsuario(request).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(Auth.this, "¡Registro exitoso! Ya puedes iniciar sesión", Toast.LENGTH_LONG).show();
+                    tabLogin.performClick();
+                } else {
+                    Toast.makeText(Auth.this, "Error: El usuario ya existe o datos inválidos", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(Auth.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -82,6 +142,14 @@ public class Auth extends AppCompatActivity {
         regPass = findViewById(R.id.regPass);
         regPassConfirm = findViewById(R.id.regPassConfirm);
         txtNoCuenta = findViewById(R.id.txtNoCuenta);
+
+        // VINCULACIÓN DE NUEVOS IDS AGREGADOS AL XML
+        etEmailLogin = findViewById(R.id.etEmailLogin);
+        etPassLogin = findViewById(R.id.etPassLogin);
+        etNombre = findViewById(R.id.etNombre);
+        etApellido = findViewById(R.id.etApellido);
+        etCelular = findViewById(R.id.etCelular);
+        etEmailReg = findViewById(R.id.etEmailReg);
     }
 
     private void configurarSpinner() {
