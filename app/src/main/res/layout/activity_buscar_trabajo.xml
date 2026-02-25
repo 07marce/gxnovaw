@@ -1,310 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
-    android:fitsSystemWindows="true"
-    tools:context=".Buscar_trabajo">
+    android:orientation="vertical"
+    android:background="#F8FAFC">
 
+    <!-- ENCABEZADO -->
     <LinearLayout
-        android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        android:elevation="8dp"
+        android:elevation="4dp"
         android:orientation="horizontal"
-        android:baselineAligned="false">
+        android:gravity="center_vertical"
+        android:padding="16dp">
 
-        <LinearLayout
-            android:id="@+id/nav_inicio"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/inicio"
-                app:tint="#AAAAAA"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Inicio"
-                android:textSize="10sp"
-                android:textColor="#AAAAAA"/>
+        <LinearLayout android:id="@+id/btn_volver_contenedor"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical"
+            android:clickable="true" android:focusable="true" android:padding="4dp">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:src="@android:drawable/ic_media_previous" app:tint="#FF5722"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/nav_buscar"
+        <TextView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/buscarr"
-                app:tint="#FF6A00"/>
-            <TextView
+            android:layout_height="wrap_content"
+            android:text="Servicios Disponibles"
+            android:textColor="#111827"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
+
+        <ImageView android:layout_width="22dp" android:layout_height="22dp"
+            android:src="@android:drawable/ic_menu_search" app:tint="#FF5722"/>
+    </LinearLayout>
+
+    <!-- BARRA DE BÚSQUEDA -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/editBusqueda"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_input_light"
+            android:paddingHorizontal="16dp"
+            android:hint="¿Qué estás buscando?"
+            android:textColor="#111827"
+            android:textColorHint="#9CA3AF"
+            android:textSize="14sp"
+            android:inputType="text"
+            android:layout_marginBottom="10dp"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buscar"
-                android:textSize="10sp"
-                android:textColor="#FF6A00"/>
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:gravity="center" android:text="Todos"
+                    android:textColor="#FFFFFF" android:textSize="12sp" android:textStyle="bold"
+                    android:background="#FF5722" android:paddingHorizontal="14dp"
+                    android:layout_marginEnd="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:gravity="center" android:text="Tecnología"
+                    android:textColor="#64748B" android:textSize="12sp"
+                    android:background="@drawable/bg_input_light" android:paddingHorizontal="14dp"
+                    android:layout_marginEnd="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:gravity="center" android:text="Construcción"
+                    android:textColor="#64748B" android:textSize="12sp"
+                    android:background="@drawable/bg_input_light" android:paddingHorizontal="14dp"
+                    android:layout_marginEnd="8dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="36dp"
+                    android:gravity="center" android:text="Hogar"
+                    android:textColor="#64748B" android:textSize="12sp"
+                    android:background="@drawable/bg_input_light" android:paddingHorizontal="14dp"/>
+            </LinearLayout>
+        </HorizontalScrollView>
+    </LinearLayout>
+
+    <!-- LISTA DE TRABAJOS -->
+    <ListView
+        android:id="@+id/list_trabajos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:padding="12dp"/>
+
+    <!-- BARRA NAVEGACIÓN -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:elevation="12dp">
+
+        <LinearLayout android:id="@+id/nav_inicio" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:orientation="vertical"
+            android:gravity="center" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_compass" app:tint="#94A3B8"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Inicio" android:textSize="10sp" android:textColor="#94A3B8"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/nav_publicaciones"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/publicaciones"
-                app:tint="#AAAAAA"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Publicaciones"
-                android:textSize="10sp"
-                android:textColor="#AAAAAA"/>
+        <LinearLayout android:id="@+id/nav_buscar" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:orientation="vertical"
+            android:gravity="center" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_search" app:tint="#FF5722"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Buscar" android:textSize="10sp" android:textColor="#FF5722"
+                android:textStyle="bold" android:layout_marginTop="2dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/nav_chat"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/chat"
-                app:tint="#AAAAAA"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chat"
-                android:textSize="10sp"
-                android:textColor="#AAAAAA"/>
+        <LinearLayout android:id="@+id/nav_publicaciones" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:orientation="vertical"
+            android:gravity="center" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_agenda" app:tint="#94A3B8"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Mis Trabajos" android:textSize="10sp" android:textColor="#94A3B8"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/nav_perfil"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/perfil"
-                app:tint="#AAAAAA"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Perfil"
-                android:textSize="10sp"
-                android:textColor="#AAAAAA"/>
+        <LinearLayout android:id="@+id/nav_chat" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:orientation="vertical"
+            android:gravity="center" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_send" app:tint="#94A3B8"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Chat" android:textSize="10sp" android:textColor="#94A3B8"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_perfil" android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="match_parent" android:orientation="vertical"
+            android:gravity="center" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="22dp" android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_myplaces" app:tint="#94A3B8"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Perfil" android:textSize="10sp" android:textColor="#94A3B8"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
     </LinearLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation_bar">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <LinearLayout
-                android:id="@+id/btn_volver_contenedor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:focusable="true"
-                android:padding="8dp">
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_arrow_back"
-                    app:tint="#FF6A00"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Volver"
-                    android:textColor="#FF6A00"
-                    android:layout_marginStart="8dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buscar Trabajo"
-                android:textSize="26sp"
-                android:textStyle="bold"
-                android:textColor="#333333"
-                android:layout_marginTop="16dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Explora oportunidades disponibles"
-                android:textColor="#7A7A7A"
-                android:layout_marginBottom="20dp"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:hint="¿Qué buscas hoy?"
-                android:background="@drawable/bd_rounded"
-                android:paddingHorizontal="16dp"
-                android:drawableStart="@drawable/buscarr"
-                android:drawablePadding="10dp"
-                android:textSize="14sp"/>
-
-            <Spinner
-                android:id="@+id/spCategoria"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bd_rounded"/>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DESARROLLO MÓVIL"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        android:textColor="#FF6A00"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="App E-commerce"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#222222"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="TechStore • Bogotá • Hace 2h"
-                        android:textColor="#7A7A7A"
-                        android:textSize="13sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="$8.000.000 - $12.000.000"
-                        android:textStyle="bold"
-                        android:textColor="#4CAF50"
-                        android:textSize="16sp"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Enviar Propuesta"
-                        android:backgroundTint="#FF6A00"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="16dp"
-                        android:textAllCaps="false"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="4dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DISEÑO UI/UX"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        android:textColor="#FF6A00"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rediseño Plataforma Web"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:layout_marginTop="4dp"
-                        android:textColor="#222222"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nova Soft • Remoto • Hace 5h"
-                        android:textColor="#7A7A7A"
-                        android:textSize="13sp"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="$5.000.000 - $7.500.000"
-                        android:textStyle="bold"
-                        android:textColor="#4CAF50"
-                        android:textSize="16sp"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:text="Enviar Propuesta"
-                        android:backgroundTint="#FF6A00"
-                        android:textColor="#FFFFFF"
-                        android:layout_marginTop="16dp"
-                        android:textAllCaps="false"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="80dp"/>
-
-        </LinearLayout>
-    </ScrollView>
-</RelativeLayout>
+</LinearLayout>

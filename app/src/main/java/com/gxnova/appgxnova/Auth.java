@@ -2,6 +2,7 @@ package com.gxnova.appgxnova;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -22,6 +23,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gxnova.appgxnova.models.AuthModels;
+import com.gxnova.appgxnova.network.ApiService;
+import com.gxnova.appgxnova.network.NetworkClient;
+import com.gxnova.appgxnova.network.SessionManager;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,19 +44,38 @@ public class Auth extends AppCompatActivity {
 
     private Button btnLogin, btnRegister;
     private TextView tabLogin, tabRegister, txtNombreCedula, txtNombreSelfie, txtNoCuenta;
-    private EditText etEmailLogin, etPassLogin, etNombre, etApellido, etCelular, etEmailReg, regPass, regPassConfirm;
+    private EditText etEmailLogin, etPassLogin, etNombre, etApellido, etCelular, etEmailReg, regPass, regPassConfirm, editCorreo, editContrasena;
+    private EditText regNombre, regCorreo, regTelefono, regCiudad, regPais;
+
     private LinearLayout layoutLogin, layoutRegister;
     private View indicatorLogin, indicatorRegister;
     private RelativeLayout areaCedula, areaSelfie;
     private CheckBox checkTerms;
     private Spinner spinnerBusqueda;
+
+    // Captura de archivos
     private ActivityResultLauncher<Intent> cameraLauncher;
     private String tipoCaptura = "";
+    private Uri uriCedula = null;
+    private Uri uriSelfie = null;
+
+    private ApiService apiService;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        apiService = NetworkClient.getApiService();
+        sessionManager = new SessionManager(this);
+
+        // Si ya hay sesión, ir directo a Inicio
+        if (sessionManager.isLoggedIn()) {
+            startActivity(new Intent(this, Inicio.class));
+            finish();
+            return;
+        }
 
         vincularVistas();
         configurarSpinner();
@@ -51,78 +84,150 @@ public class Auth extends AppCompatActivity {
 
         txtNoCuenta.setOnClickListener(v -> tabRegister.performClick());
 
-        // LÓGICA DE LOGIN
-        btnLogin.setOnClickListener(v -> {
-            String email = etEmailLogin.getText().toString().trim();
-            String pass = etPassLogin.getText().toString().trim();
-
-            if (email.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(this, "Por favor complete los datos", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            LoginRequest loginRequest = new LoginRequest(email, pass);
-            RetrofitClient.getApiService().loginUsuario(loginRequest).enqueue(new Callback<LoginResponse>() {
-                @Override
-                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(Auth.this, "Bienvenido " + response.body().getNombre(), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Auth.this, Inicio.class));
-                        finish();
-                    } else {
-                        Toast.makeText(Auth.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<LoginResponse> call, Throwable t) {
-                    Toast.makeText(Auth.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        });
-
-        // LÓGICA DE REGISTRO
-        btnRegister.setOnClickListener(v -> {
-            String pass = regPass.getText().toString();
-            String passConfirm = regPassConfirm.getText().toString();
-
-            if (!checkTerms.isChecked()) {
-                Toast.makeText(this, "Debe aceptar los términos", Toast.LENGTH_SHORT).show();
-            } else if (pass.isEmpty() || !pass.equals(passConfirm)) {
-                Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-            } else if (etNombre.getText().toString().isEmpty() || etEmailReg.getText().toString().isEmpty()) {
-                Toast.makeText(this, "Nombre y Email son obligatorios", Toast.LENGTH_SHORT).show();
-            } else {
-                ejecutarRegistro();
-            }
-        });
+        btnLogin.setOnClickListener(v -> doLogin());
+        btnRegister.setOnClickListener(v -> doRegister());
     }
 
-    private void ejecutarRegistro() {
-        RegisterRequest request = new RegisterRequest(
-                etNombre.getText().toString().trim(),
-                etApellido.getText().toString().trim(),
-                etCelular.getText().toString().trim(),
-                spinnerBusqueda.getSelectedItem().toString(),
-                etEmailReg.getText().toString().trim(),
-                regPass.getText().toString()
-        );
+    private void doLogin() {
+        String correo = editCorreo != null ? editCorreo.getText().toString().trim() : "";
+        String contrasena = editContrasena != null ? editContrasena.getText().toString() : "";
 
-        RetrofitClient.getApiService().registrarUsuario(request).enqueue(new Callback<Void>() {
+        if (correo.isEmpty() || contrasena.isEmpty()) {
+            Toast.makeText(this, "Ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        btnLogin.setEnabled(false);
+        btnLogin.setText("Ingresando...");
+
+        AuthModels.LoginRequest body = new AuthModels.LoginRequest(correo, contrasena);
+        apiService.login(body).enqueue(new Callback<AuthModels.LoginResponse>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(Auth.this, "¡Registro exitoso! Ya puedes iniciar sesión", Toast.LENGTH_LONG).show();
-                    tabLogin.performClick();
+            public void onResponse(Call<AuthModels.LoginResponse> call, Response<AuthModels.LoginResponse> response) {
+                btnLogin.setEnabled(true);
+                btnLogin.setText("Ingresar");
+                if (response.isSuccessful() && response.body() != null) {
+                    AuthModels.LoginResponse res = response.body();
+                    String rol = (res.usuario != null && res.usuario.rol != null) ? res.usuario.rol : "";
+                    int userId = (res.usuario != null) ? res.usuario.id : -1;
+                    String name = (res.usuario != null) ? res.usuario.nombre : "";
+                    sessionManager.saveSession(res.token, userId, name, rol);
+                    startActivity(new Intent(Auth.this, Inicio.class));
+                    finish();
                 } else {
-                    Toast.makeText(Auth.this, "Error: El usuario ya existe o datos inválidos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Auth.this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Toast.makeText(Auth.this, "Error de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<AuthModels.LoginResponse> call, Throwable t) {
+                btnLogin.setEnabled(true);
+                btnLogin.setText("Ingresar");
+                Toast.makeText(Auth.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
+    private void doRegister() {
+        if (!checkTerms.isChecked()) {
+            Toast.makeText(this, "Debe aceptar los términos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String pass = regPass.getText().toString();
+        String passConf = regPassConfirm.getText().toString();
+        if (pass.isEmpty() || !pass.equals(passConf)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Campos de texto obligatorios
+        String nombre = regNombre != null ? regNombre.getText().toString().trim() : "";
+        String correo = regCorreo != null ? regCorreo.getText().toString().trim() : "";
+        String telefono = regTelefono != null ? regTelefono.getText().toString().trim() : "";
+        String ciudad = regCiudad != null ? regCiudad.getText().toString().trim() : "";
+        String pais = regPais != null ? regPais.getText().toString().trim() : "";
+        String busqueda = spinnerBusqueda.getSelectedItemPosition() == 1 ? "Trabajar" : "Contratar";
+
+        if (nombre.isEmpty() || correo.isEmpty() || pass.isEmpty()) {
+            Toast.makeText(this, "Completa los campos requeridos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        btnRegister.setEnabled(false);
+        btnRegister.setText("Registrando...");
+
+        RequestBody rbNombre = toRequestBody(nombre);
+        RequestBody rbCorreo = toRequestBody(correo);
+        RequestBody rbPass = toRequestBody(pass);
+        RequestBody rbTelefono = toRequestBody(telefono);
+        RequestBody rbCiudad = toRequestBody(ciudad);
+        RequestBody rbPais = toRequestBody(pais);
+        RequestBody rbBusqueda = toRequestBody(busqueda);
+
+        // Imágenes: si no se capturaron usamos archivos vacíos
+        MultipartBody.Part partCedula = uriToMultipart(uriCedula, "foto_cedula");
+        MultipartBody.Part partSelfie = uriToMultipart(uriSelfie, "selfie");
+        MultipartBody.Part partFotoPerfil = uriToMultipart(uriSelfie, "foto_perfil"); // reutiliza selfie si no hay foto
+                                                                                      // de perfil
+
+        apiService.register(rbNombre, rbCorreo, rbPass, rbTelefono, rbCiudad, rbPais, rbBusqueda,
+                partCedula, partSelfie, partFotoPerfil)
+                .enqueue(new Callback<AuthModels.MessageResponse>() {
+                    @Override
+                    public void onResponse(Call<AuthModels.MessageResponse> call,
+                            Response<AuthModels.MessageResponse> response) {
+                        btnRegister.setEnabled(true);
+                        btnRegister.setText("Registrarme");
+                        if (response.isSuccessful()) {
+                            Toast.makeText(Auth.this, "Registro exitoso. Inicia sesión.", Toast.LENGTH_LONG).show();
+                            tabLogin.performClick();
+                        } else {
+                            Toast.makeText(Auth.this, "Error al registrar. Verifica tus datos.", Toast.LENGTH_LONG)
+                                    .show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuthModels.MessageResponse> call, Throwable t) {
+                        btnRegister.setEnabled(true);
+                        btnRegister.setText("Registrarme");
+                        Toast.makeText(Auth.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    // ─── Utilidades ───────────────────────────────────────────────────────────
+
+    private RequestBody toRequestBody(String value) {
+        return RequestBody.create(MediaType.parse("text/plain"), value);
+    }
+
+    private MultipartBody.Part uriToMultipart(Uri uri, String fieldName) {
+        if (uri == null) {
+            // Archivo vacío como fallback
+            RequestBody empty = RequestBody.create(MediaType.parse("image/jpeg"), new byte[0]);
+            return MultipartBody.Part.createFormData(fieldName, fieldName + ".jpg", empty);
+        }
+        try {
+            InputStream is = getContentResolver().openInputStream(uri);
+            File tmpFile = File.createTempFile(fieldName, ".jpg", getCacheDir());
+            FileOutputStream fos = new FileOutputStream(tmpFile);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = is.read(buf)) > 0)
+                fos.write(buf, 0, len);
+            fos.close();
+            is.close();
+            RequestBody rb = RequestBody.create(MediaType.parse("image/jpeg"), tmpFile);
+            return MultipartBody.Part.createFormData(fieldName, tmpFile.getName(), rb);
+        } catch (IOException e) {
+            RequestBody empty = RequestBody.create(MediaType.parse("image/jpeg"), new byte[0]);
+            return MultipartBody.Part.createFormData(fieldName, fieldName + ".jpg", empty);
+        }
+    }
+
+    // ─── Binding ──────────────────────────────────────────────────────────────
 
     private void vincularVistas() {
         btnLogin = findViewById(R.id.btnLogin);
@@ -143,20 +248,26 @@ public class Auth extends AppCompatActivity {
         regPassConfirm = findViewById(R.id.regPassConfirm);
         txtNoCuenta = findViewById(R.id.txtNoCuenta);
 
-        // VINCULACIÓN DE NUEVOS IDS AGREGADOS AL XML
-        etEmailLogin = findViewById(R.id.etEmailLogin);
-        etPassLogin = findViewById(R.id.etPassLogin);
-        etNombre = findViewById(R.id.etNombre);
-        etApellido = findViewById(R.id.etApellido);
-        etCelular = findViewById(R.id.etCelular);
-        etEmailReg = findViewById(R.id.etEmailReg);
+        // Campos de login
+        editCorreo = findViewById(R.id.editCorreo);
+        editContrasena = findViewById(R.id.editContrasena);
+        // Campos de registro
+        regNombre = findViewById(R.id.regNombre);
+        regCorreo = findViewById(R.id.regCorreo);
+        regTelefono = findViewById(R.id.regTelefono);
+        regCiudad = findViewById(R.id.regCiudad);
+        regPais = findViewById(R.id.regPais);
     }
 
     private void configurarSpinner() {
-        String[] ops = {"¿Qué buscas?", "Quiero trabajar", "Quiero contratar"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, ops) {
+        String[] ops = { "¿Qué buscas?", "Quiero trabajar", "Quiero contratar" };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,
+                ops) {
             @Override
-            public boolean isEnabled(int pos) { return pos != 0; }
+            public boolean isEnabled(int pos) {
+                return pos != 0;
+            }
+
             @Override
             public View getDropDownView(int pos, @Nullable View conv, @NonNull ViewGroup par) {
                 View v = super.getDropDownView(pos, conv, par);
@@ -169,18 +280,36 @@ public class Auth extends AppCompatActivity {
 
     private void configurarCamara() {
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK) {
+            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                Uri selectedUri = result.getData().getData();
                 if (tipoCaptura.equals("CEDULA")) {
-                    txtNombreCedula.setText("Cédula Capturada ✅");
+                    uriCedula = selectedUri;
+                    txtNombreCedula.setText("Cédula seleccionada ✅");
                     txtNombreCedula.setTextColor(Color.BLACK);
                 } else {
-                    txtNombreSelfie.setText("Selfie Capturada ✅");
+                    uriSelfie = selectedUri;
+                    txtNombreSelfie.setText("Selfie seleccionada ✅");
                     txtNombreSelfie.setTextColor(Color.BLACK);
                 }
             }
         });
-        areaCedula.setOnClickListener(v -> { tipoCaptura = "CEDULA"; cameraLauncher.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE)); });
-        areaSelfie.setOnClickListener(v -> { tipoCaptura = "SELFIE"; cameraLauncher.launch(new Intent(MediaStore.ACTION_IMAGE_CAPTURE)); });
+
+        // Usamos galería en lugar de cámara para obtener Uri del archivo
+        Intent gallery = new Intent(Intent.ACTION_PICK);
+        gallery.setType("image/*");
+
+        if (areaCedula != null) {
+            areaCedula.setOnClickListener(v -> {
+                tipoCaptura = "CEDULA";
+                cameraLauncher.launch(gallery);
+            });
+        }
+        if (areaSelfie != null) {
+            areaSelfie.setOnClickListener(v -> {
+                tipoCaptura = "SELFIE";
+                cameraLauncher.launch(gallery);
+            });
+        }
     }
 
     private void configurarTabs() {
