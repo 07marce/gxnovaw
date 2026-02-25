@@ -1,180 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FB">
+    android:orientation="vertical"
+    android:background="#F8FAFC">
 
-  <RelativeLayout
-      android:id="@+id/header_container"
-      android:layout_width="match_parent"
-      android:layout_height="130dp"
-      android:background="#FF6A00"
-      android:padding="20dp">
-
-    <ImageView
-        android:id="@+id/btn_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/notificacion"
-        app:tint="#FFFFFF" />
-
-    <TextView
-        android:id="@+id/txt_titulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="Notificaciones"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:text="Marcar todas como leídas"
-        android:textColor="#FFFFFF"
-        android:textSize="10sp"
-        android:alpha="0.8" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical">
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tienes" android:textColor="#FFFFFF" />
-      <TextView
-          android:layout_width="22dp"
-          android:layout_height="22dp"
-          android:layout_marginHorizontal="8dp"
-          android:background="@drawable/badge_azul"
-          android:backgroundTint="#FF3B30"
-          android:gravity="center"
-          android:text="3"
-          android:textColor="#FFFFFF"
-          android:textSize="10sp"
-          android:textStyle="bold" />
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="notificaciones nuevas" android:textColor="#FFFFFF" />
-    </LinearLayout>
-  </RelativeLayout>
-
-  <HorizontalScrollView
-      android:id="@+id/scroll_filtros"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/header_container"
-      android:padding="15dp"
-      android:scrollbars="none">
-    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Todas" android:background="#FF6A00" android:textColor="#FFFFFF" android:paddingHorizontal="16dp" android:paddingVertical="8dp" android:layout_marginEnd="10dp" android:textStyle="bold"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mensajes" android:background="@drawable/fondo_chat_blanco" android:paddingHorizontal="16dp" android:paddingVertical="8dp" android:layout_marginEnd="10dp"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pagos" android:background="@drawable/fondo_chat_blanco" android:paddingHorizontal="16dp" android:paddingVertical="8dp" android:layout_marginEnd="10dp"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Reseñas" android:background="@drawable/fondo_chat_blanco" android:paddingHorizontal="16dp" android:paddingVertical="8dp"/>
-    </LinearLayout>
-  </HorizontalScrollView>
-
-  <ScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_below="@id/scroll_filtros"
-      android:layout_above="@+id/bottom_navigation_bar">
-
+    <!-- ENCABEZADO -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingHorizontal="16dp"
-        android:paddingBottom="20dp">
+        android:paddingVertical="14dp">
 
-      <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/fondo_notif_azul" android:padding="15dp" android:layout_marginBottom="12dp">
-        <androidx.cardview.widget.CardView android:id="@+id/img_carlos" android:layout_width="45dp" android:layout_height="45dp" app:cardCornerRadius="22.5dp">
-          <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/user1" android:scaleType="centerCrop" />
-        </androidx.cardview.widget.CardView>
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/img_carlos" android:layout_marginStart="12dp" android:orientation="vertical">
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nuevo mensaje de Carlos Martínez" android:textStyle="bold" android:textColor="#000000" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hola, ¿podemos agendar una llamada?" android:textSize="12sp" android:textColor="#555555" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 5 min" android:textSize="10sp" android:layout_marginTop="4dp" />
-        </LinearLayout>
-        <ImageView android:layout_width="18dp" android:layout_height="18dp" android:layout_alignParentEnd="true" android:src="@drawable/vector" android:alpha="0.3"/>
-      </RelativeLayout>
+        <ImageView android:layout_width="36dp" android:layout_height="36dp"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="#FF5722" android:clickable="true" android:focusable="true"
+            android:padding="6dp" android:layout_marginEnd="8dp"
+            android:id="@+id/btnBackNotif"/>
 
-      <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/fondo_notif_azul" android:padding="15dp" android:layout_marginBottom="12dp">
-        <androidx.cardview.widget.CardView android:id="@+id/img_ana" android:layout_width="45dp" android:layout_height="45dp" app:cardCornerRadius="22.5dp">
-          <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/user2" android:scaleType="centerCrop" />
-        </androidx.cardview.widget.CardView>
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/img_ana" android:layout_marginStart="12dp" android:orientation="vertical">
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nueva propuesta recibida" android:textStyle="bold" android:textColor="#000000" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ana López envió una propuesta para tu proyecto" android:textSize="12sp" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 1 hora" android:textSize="10sp" android:layout_marginTop="4dp" />
-        </LinearLayout>
-      </RelativeLayout>
+        <TextView
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Notificaciones"
+            android:textColor="#111827"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
 
-      <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/fondo_notif_verde" android:padding="15dp" android:layout_marginBottom="12dp">
-        <ImageView android:id="@+id/icon_pago" android:layout_width="45dp" android:layout_height="45dp" android:src="@drawable/urgente" app:tint="#27AE60"/>
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/icon_pago" android:layout_marginStart="12dp" android:orientation="vertical">
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pago recibido" android:textStyle="bold" android:textColor="#27AE60" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recibiste $2.500.000 COP" android:textSize="12sp" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 2 horas" android:textSize="10sp" android:layout_marginTop="4dp" />
-        </LinearLayout>
-      </RelativeLayout>
-
-      <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/fondo_notif_morado" android:padding="15dp" android:layout_marginBottom="12dp">
-        <ImageView android:id="@+id/icon_fin" android:layout_width="45dp" android:layout_height="45dp" android:src="@drawable/urgente" app:tint="#8E44AD"/>
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/icon_fin" android:layout_marginStart="12dp" android:orientation="vertical">
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Proyecto finalizado" android:textStyle="bold" android:textColor="#8E44AD" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="El proyecto 'Diseño Logo' ha sido completado" android:textSize="12sp" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hace 5 horas" android:textSize="10sp" />
-        </LinearLayout>
-      </RelativeLayout>
-
-      <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/fondo_notif_amarillo" android:padding="15dp">
-        <androidx.cardview.widget.CardView android:id="@+id/img_diego" android:layout_width="45dp" android:layout_height="45dp" app:cardCornerRadius="22.5dp">
-          <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/user4" android:scaleType="centerCrop" />
-        </androidx.cardview.widget.CardView>
-        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/img_diego" android:layout_marginStart="12dp" android:orientation="vertical">
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nueva calificación" android:textStyle="bold" android:textColor="#000000" />
-          <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Diego Torres te calificó con 5 estrellas ⭐⭐⭐⭐⭐" android:textSize="11sp" />
-        </LinearLayout>
-      </RelativeLayout>
-
-    </LinearLayout>
-  </ScrollView>
-
-  <LinearLayout
-      android:id="@+id/bottom_navigation_bar"
-      android:layout_width="match_parent"
-      android:layout_height="80dp"
-      android:paddingBottom="20dp"
-      android:orientation="horizontal"
-      android:background="#FFFFFF"
-      android:layout_alignParentBottom="true"
-      android:elevation="8dp">
-
-    <LinearLayout android:id="@+id/nav_inicio" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
-      <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/inicio" app:tint="#AAAAAA"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        <!-- Badge sin leer -->
+        <TextView
+            android:id="@+id/badge_no_leidas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FF5722"
+            android:textColor="#FFFFFF"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="2dp"
+            android:text="0"
+            android:visibility="gone"/>
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/nav_buscar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
-      <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/buscarr" app:tint="#AAAAAA"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Buscar" android:textSize="10sp" android:textColor="#AAAAAA"/>
+    <!-- EMPTY STATE (visible cuando no hay notificaciones) -->
+    <LinearLayout
+        android:id="@+id/empty_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="48dp"
+        android:visibility="gone">
+
+        <ImageView android:layout_width="64dp" android:layout_height="64dp"
+            android:src="@android:drawable/ic_menu_info_details"
+            app:tint="#CBD5E1"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Sin notificaciones"
+            android:textColor="#94A3B8" android:textSize="16sp" android:textStyle="bold"
+            android:layout_marginTop="12dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Aquí aparecerán tus alertas"
+            android:textColor="#CBD5E1" android:textSize="13sp"
+            android:layout_marginTop="4dp"/>
     </LinearLayout>
 
-    <LinearLayout android:id="@+id/nav_publicaciones" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
-      <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/publicaciones" app:tint="#AAAAAA"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Publicaciones" android:textSize="10sp" android:textColor="#AAAAAA"/>
-    </LinearLayout>
+    <!-- LISTA DE NOTIFICACIONES -->
+    <ListView
+        android:id="@+id/list_notificaciones"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:padding="12dp"/>
 
-    <LinearLayout android:id="@+id/nav_chat" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
-      <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/chat" app:tint="#AAAAAA"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chat" android:textSize="10sp" android:textColor="#AAAAAA"/>
-    </LinearLayout>
-
-    <LinearLayout android:id="@+id/nav_perfil" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
-      <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/perfil" app:tint="#AAAAAA"/>
-      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textSize="10sp" android:textColor="#AAAAAA"/>
-    </LinearLayout>
-  </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

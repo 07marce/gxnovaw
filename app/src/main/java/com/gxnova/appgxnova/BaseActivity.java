@@ -3,11 +3,29 @@ package com.gxnova.appgxnova;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
+
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.gxnova.appgxnova.network.SessionManager;
 
 public class BaseActivity extends AppCompatActivity {
 
+    protected SessionManager sessionManager;
     protected LinearLayout navInicio, navBuscar, navPublicaciones, navChat, navPerfil;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        sessionManager = new SessionManager(this);
+    }
+
+    /** Redirige a Auth si no hay sesión activa. */
+    protected void requireLogin() {
+        if (!sessionManager.isLoggedIn()) {
+            startActivity(new Intent(this, Auth.class));
+            finish();
+        }
+    }
 
     protected void setupBottomNavigation() {
         navInicio = findViewById(R.id.nav_inicio);
