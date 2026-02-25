@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FB"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="#FF7C1A"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:elevation="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/btn_volver_contenedor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:clickable="true"
+                android:focusable="true">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/flecha"
+                    app:tint="#FFFFFF" />
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Mis Publicaciones"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/bd_rounded"
+            android:backgroundTint="#CC5500"
+            android:padding="4dp">
+            <TextView
+                android:id="@+id/tab_activas"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Activas (0)"
+                android:background="@drawable/bd_rounded"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FF7C1A"
+                android:gravity="center"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/tab_expiradas"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Expiradas (0)"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:layout_above="@+id/barra_inferior"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/publicaciones"
+            android:alpha="0.2"
+            app:tint="#FF7C1A" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aún no tienes publicaciones"
+            android:textColor="#8E8E93"
+            android:textSize="16sp"
+            android:layout_marginTop="15dp" />
+        <Button
+            android:id="@+id/btn_crear_publicacion_centro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear Publicación"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#FF7C1A"
+            android:textAllCaps="false"
+            android:paddingHorizontal="30dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/barra_inferior"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="15dp"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout android:id="@+id/nav_inicio" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/hogar" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_buscar" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/buscarr" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Buscar" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_publicaciones" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/publicaciones" app:tint="#FF6A00" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Publicaciones" android:textColor="#FF7C1A" android:textStyle="bold" android:textSize="10sp" />
+        </LinearLayout>
+
+        <RelativeLayout android:id="@+id/nav_chat" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:clickable="true">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical">
+                <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/chat" app:tint="#AAAAAA" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chat" android:textSize="10sp" android:textColor="#AAAAAA" />
+            </LinearLayout>
+            <TextView android:layout_width="16dp" android:layout_height="16dp" android:layout_centerHorizontal="true" android:layout_marginTop="8dp" android:layout_marginStart="14dp" android:background="@drawable/bd_rounded" android:backgroundTint="#FF3B30" android:gravity="center" android:text="3" android:textColor="#FFFFFF" android:textSize="9sp" android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout android:id="@+id/nav_perfil" android:layout_width="0dp" android:layout_weight="1" android:layout_height="match_parent" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/perfil" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

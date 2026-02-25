@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">GXNOVA</string>
+    <string name="conectando">Conectando talento con oportunidades</string>
+    <string name="eslogan">Gana Experiencia Novedosa</string>
+    <string name="cargando">Cargando</string>
+    <string name="urgentes">Urgentes</string>
+    <string name="urgentes_text">Urgentes</string>
+    <string name="talento">Talento</string>
+    <string name="talento_text">Talento</string>
+    <string name="servicios_principales">Servicios Principales</string>
+    <string name="piaggio">Piaggio</string>
+    <string name="disponibles">8 Disponibles</string>
+    <string name="buscar_services">¿Qué servicio buscas?</string>
+    <string name="pregunta">¿Qué quieres hacer hoy?</string>
+
+
+    <string-array name="Categorias">
+        <item>Selecciona Categoria</item>
+        <item>Hogar Y Limpieza</item>
+        <item>Reparaciones</item>
+        <item>Mudanzas Y Transporte</item>
+        <item>Mascotas</item>
+        <item>Cuidado personal</item>
+        <item>Tecnología</item>
+        <item>Cocina Y Alimentos</item>
+        <item>Jardinería</item>
+        <item>Servicios Profesionales</item>
+        <item>Mandados Y Express</item>
+    </string-array>
+
+    <string-array name="QueBuscas">
+        <item>Quiero Trabajar</item>
+        <item>Quiero Contratar</item>
+        <item>¿Que buscas?</item>
+    </string-array>
+
+
+
+
+
+</resources>

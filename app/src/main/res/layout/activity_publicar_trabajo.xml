@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F7FB"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF6A00"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:elevation="4dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/maleta"
+                app:tint="#FFFFFF" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Publicar Servicio"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ofrece tu trabajo y encuentra clientes"
+            android:textColor="#E0E0E0"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+        android:layout_above="@+id/barra_inferior_estandar"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView android:text="* Título del servicio" android:textStyle="bold" android:layout_height="wrap_content" android:layout_width="match_parent" android:textColor="#333333"/>
+            <EditText android:id="@+id/etTituloServicio" android:hint="Ej: Reparación de computadores" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <TextView android:text="* Descripción detallada" android:textStyle="bold" android:layout_marginTop="12dp" android:layout_height="wrap_content" android:layout_width="match_parent" android:textColor="#333333"/>
+            <EditText android:id="@+id/etDescripcionServicio" android:hint="Describe tu servicio" android:minLines="4" android:gravity="top" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <TextView
+                android:text="* Categoría"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#333333"/>
+
+            <Spinner
+                android:id="@+id/spinnerCategorias"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="4dp"
+                android:background="@drawable/bg_input"
+                android:padding="12dp" />
+
+            <TextView android:text="* Ubicación" android:textStyle="bold" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#333333"/>
+            <EditText android:id="@+id/etUbicacion" android:hint="Ej: Popayán, Cauca" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <TextView android:text="$ * Precio por servicio (COP)" android:textStyle="bold" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#333333"/>
+            <EditText android:id="@+id/etPrecio" android:hint="Ej: 50000" android:inputType="number" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <TextView android:text="* Método de pago" android:textStyle="bold" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#333333"/>
+            <EditText android:id="@+id/etMetodoPago" android:hint="Efectivo, Nequi, Daviplata" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <TextView android:text="WhatsApp" android:textStyle="bold" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#333333"/>
+            <EditText android:id="@+id/etWhatsapp" android:hint="Ej: 3001234567" android:inputType="phone" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <TextView android:text="Teléfono" android:textStyle="bold" android:layout_marginTop="12dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="#333333"/>
+            <EditText android:id="@+id/etTelefono" android:hint="Ej: 6011234567" android:inputType="phone" android:background="@drawable/bg_input" android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="12dp" android:layout_marginTop="4dp" android:textSize="14sp"/>
+
+            <Button
+                android:id="@+id/btnPublicarServicioFinal"
+                android:text="Publicar Servicio"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#FF6A00"
+                android:textColor="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:textAllCaps="false"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/barra_inferior_estandar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="15dp"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout android:id="@+id/nav_inicio" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/inicio" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_buscar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/buscarr" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Buscar" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_publicar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/publicaciones" app:tint="#FF6A00"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Publicar" android:textSize="10sp" android:textColor="#FF6A00" android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_chat" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/chat" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chat" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_perfil" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/perfil" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8FAFC"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="24dp">
+
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/logo_gxnova" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bienvenido a GXNOVA"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#000000"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Conectamos talento con oportunidades"
+            android:textColor="#64748B"
+            android:textSize="14sp"
+            android:layout_marginBottom="20dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="15dp">
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical">
+                <TextView android:id="@+id/tabLogin" android:layout_width="120dp" android:layout_height="40dp" android:gravity="center" android:text="Iniciar Sesión" android:textColor="#FF5722" android:textStyle="bold" />
+                <View android:id="@+id/indicatorLogin" android:layout_width="match_parent" android:layout_height="3dp" android:background="#FF5722" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="20dp">
+                <TextView android:id="@+id/tabRegister" android:layout_width="120dp" android:layout_height="40dp" android:gravity="center" android:text="Registrarse" android:textColor="#64748B" />
+                <View android:id="@+id/indicatorRegister" android:layout_width="match_parent" android:layout_height="3dp" android:background="#E2E8F0" android:visibility="invisible"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="#FFFFFF">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp">
+
+                <LinearLayout android:id="@+id/layoutLogin" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
+                    <TextView android:text="Email" android:textColor="#000000" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="55dp" android:background="@drawable/bg_input_light" android:paddingHorizontal="15dp" android:textColor="#000000" android:layout_marginBottom="15dp"/>
+
+                    <TextView android:text="Contraseña" android:textColor="#000000" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="#FF5722"
+                        app:hintEnabled="false">
+                        <EditText android:layout_width="match_parent" android:layout_height="55dp" android:inputType="textPassword" android:background="@drawable/bg_input_light" android:paddingHorizontal="15dp" android:textColor="#000000" android:gravity="center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button android:id="@+id/btnLogin" android:layout_width="match_parent" android:layout_height="55dp" android:layout_marginTop="15dp" android:text="Ingresar" android:backgroundTint="#FF5722" android:textAllCaps="false"/>
+                    <TextView android:id="@+id/txtNoCuenta" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="¿No tienes cuenta? Regístrate aquí" android:textColor="#FF5722" android:gravity="center" android:layout_marginTop="20dp" android:clickable="true"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/layoutRegister" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                    <TextView android:text="Crear cuenta" android:textStyle="bold" android:textSize="20sp" android:textColor="#000000" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Ingresa tus datos personales para continuar" android:textSize="12sp" android:textColor="#64748B" android:layout_marginBottom="15dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                        <EditText android:layout_width="0dp" android:layout_weight="1" android:layout_height="52dp" android:hint="Nombre" android:textColor="#000000" android:background="@drawable/bg_input_light" android:paddingHorizontal="10dp" android:layout_marginEnd="5dp"/>
+                        <EditText android:layout_width="0dp" android:layout_weight="1" android:layout_height="52dp" android:hint="Apellido" android:textColor="#000000" android:background="@drawable/bg_input_light" android:paddingHorizontal="10dp" android:layout_marginStart="5dp"/>
+                    </LinearLayout>
+
+                    <EditText android:layout_width="match_parent" android:layout_height="52dp" android:hint="Número de celular" android:inputType="phone" android:textColor="#000000" android:background="@drawable/bg_input_light" android:paddingHorizontal="10dp" android:layout_marginTop="10dp"/>
+
+                    <TextView android:text="¿Qué buscas?" android:textSize="12sp" android:layout_marginTop="10dp" android:textColor="#000000" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <Spinner android:id="@+id/spinnerBusqueda" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="4dp" android:background="@drawable/bg_input_light"/>
+
+                    <EditText android:layout_width="match_parent" android:layout_height="52dp" android:hint="Email" android:textColor="#000000" android:background="@drawable/bg_input_light" android:paddingHorizontal="10dp" android:layout_marginTop="10dp"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="#FF5722"
+                        app:hintEnabled="false">
+                        <EditText android:id="@+id/regPass" android:layout_width="match_parent" android:layout_height="55dp" android:hint="Contraseña" android:inputType="textPassword" android:background="@drawable/bg_input_light" android:paddingHorizontal="10dp" android:textColor="#000000" android:gravity="center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:passwordToggleEnabled="true"
+                        app:passwordToggleTint="#FF5722"
+                        app:hintEnabled="false">
+                        <EditText android:id="@+id/regPassConfirm" android:layout_width="match_parent" android:layout_height="55dp" android:hint="Confirmar Contraseña" android:inputType="textPassword" android:background="@drawable/bg_input_light" android:paddingHorizontal="10dp" android:textColor="#000000" android:gravity="center_vertical"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView android:text="Verificación de Identidad" android:textStyle="bold" android:layout_marginTop="20dp" android:textColor="#000000" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <TextView android:text="Sube una foto clara de tus documentos" android:textSize="12sp" android:textColor="#64748B" android:layout_marginBottom="10dp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+                    <RelativeLayout android:id="@+id/area_cedula" android:layout_width="match_parent" android:layout_height="52dp" android:background="@drawable/bg_input_light" android:paddingHorizontal="12dp">
+                        <TextView android:id="@+id/txt_nombre_cedula" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Foto Cédula *" android:gravity="center_vertical" android:textColor="#64748B" android:textSize="12sp"/>
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@android:drawable/ic_menu_camera" app:tint="#FF5722"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout android:id="@+id/area_selfie" android:layout_width="match_parent" android:layout_height="52dp" android:background="@drawable/bg_input_light" android:layout_marginTop="10dp" android:paddingHorizontal="12dp">
+                        <TextView android:id="@+id/txt_nombre_selfie" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="Tomar Selfie *" android:gravity="center_vertical" android:textColor="#64748B" android:textSize="12sp"/>
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:src="@android:drawable/ic_menu_camera" app:tint="#FF5722"/>
+                    </RelativeLayout>
+
+                    <CheckBox android:id="@+id/checkTerms" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Acepto términos y condiciones" android:textColor="#000000" android:textSize="12sp"/>
+
+                    <Button android:id="@+id/btnRegister" android:layout_width="match_parent" android:layout_height="55dp" android:layout_marginTop="15dp" android:text="Crear cuenta" android:backgroundTint="#FF5722" android:textAllCaps="false"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="© 2026 GXNOVA - Todos los derechos reservados"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FB"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:id="@+id/header_top"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FF6A00"
+        android:paddingHorizontal="15dp"
+        android:elevation="4dp">
+        <ImageView
+            android:id="@+id/btn_back_perfil"
+            android:layout_width="24dp" android:layout_height="24dp"
+            android:layout_centerVertical="true" android:src="@drawable/flecha" app:tint="#FFFFFF" />
+        <TextView
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_centerInParent="true" android:text="Mi Perfil"
+            android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/btn_notificaciones"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_popup_reminder"
+            app:tint="#FFFFFF" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header_top"
+        android:layout_above="@+id/barra_inferior_estandar"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="30dp">
+
+            <RelativeLayout android:layout_width="match_parent" android:layout_height="210dp">
+                <View android:layout_width="match_parent" android:layout_height="100dp" android:background="#FF6A00" />
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp" android:layout_marginTop="10dp"
+                    app:cardCornerRadius="25dp" app:cardElevation="8dp">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="20dp">
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="80dp" android:layout_height="80dp" app:cardCornerRadius="40dp">
+                            <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/perfil" android:scaleType="centerCrop"/>
+                        </androidx.cardview.widget.CardView>
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="15dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nicolas leon" android:textSize="18sp" android:textStyle="bold" android:textColor="#000000"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⭐ 4.8 (127 Reseñas)" android:textColor="#FFB300" android:textSize="12sp"/>
+                            <Button android:id="@+id/btn_editar_perfil" android:layout_width="match_parent" android:layout_height="35dp" android:text="Editar Perfil" android:backgroundTint="#FF6A00" android:textSize="10sp" android:layout_marginTop="5dp" android:textAllCaps="false" app:cornerRadius="8dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rol" android:textStyle="bold" android:layout_marginStart="25dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:paddingHorizontal="20dp" android:layout_marginTop="10dp">
+                <Button android:id="@+id/btn_perfil_trabajar" android:layout_width="0dp" android:layout_height="50dp" android:layout_weight="1" android:text="Trabajar" android:backgroundTint="#00C853" android:layout_marginEnd="5dp" android:textAllCaps="false" app:cornerRadius="12dp" android:drawableStart="@drawable/buscarr"/>
+                <Button android:id="@+id/btn_perfil_publicar" android:layout_width="0dp" android:layout_height="50dp" android:layout_weight="1" android:text="Publicar empleo" android:backgroundTint="#FF6A00" android:textAllCaps="false" app:cornerRadius="12dp" android:drawableStart="@drawable/hogar"/>
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mi Ubicación" android:textStyle="bold" android:layout_marginStart="25dp" android:layout_marginTop="20dp"/>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="2dp">
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+                    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/mapa" android:scaleType="centerCrop"/>
+                    <TextView
+                        android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true" android:layout_alignParentEnd="true"
+                        android:layout_margin="12dp" android:text="📍 Popayán"
+                        android:background="@drawable/circulo_blanco_sombra" android:padding="8dp"
+                        android:textStyle="bold" android:textSize="12sp"/>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginHorizontal="20dp" android:layout_marginTop="20dp" android:background="#E0E0E0" android:padding="2dp">
+                <TextView android:id="@+id/tab_personal" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="Información Personal" android:gravity="center" android:background="#FF6A00" android:textColor="#FFFFFF" android:textSize="11sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tab_profesional" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:text="Información Profesional" android:gravity="center" android:textColor="#666666" android:textSize="11sp"/>
+            </LinearLayout>
+
+            <FrameLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="20dp">
+
+                <LinearLayout android:id="@+id/layout_personal" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="visible">
+                    <TextView android:text="Nombre" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:hint="Nicolas" android:background="@drawable/input_perfil_gris" android:paddingHorizontal="12dp" android:layout_marginBottom="12dp" android:textSize="14sp"/>
+
+                    <TextView android:text="Apellido" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:hint="Leon" android:background="@drawable/input_perfil_gris" android:paddingHorizontal="12dp" android:layout_marginBottom="12dp" android:textSize="14sp"/>
+
+                    <TextView android:text="Email" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:hint="leoncampe2707@gmail.com" android:background="@drawable/input_perfil_gris" android:paddingHorizontal="12dp" android:layout_marginBottom="12dp" android:textSize="14sp"/>
+
+                    <TextView android:text="Teléfono" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:hint="3043246745" android:background="@drawable/input_perfil_gris" android:paddingHorizontal="12dp" android:layout_marginBottom="12dp" android:textSize="14sp"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/layout_profesional" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                    <TextView android:text="Biografía" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="100dp" android:hint="Cuéntanos sobre ti..." android:gravity="top" android:padding="12dp" android:background="@drawable/input_perfil_gris" android:layout_marginBottom="12dp" android:textSize="14sp"/>
+
+                    <TextView android:text="Precio por hora (COP)" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                    <EditText android:layout_width="match_parent" android:layout_height="45dp" android:hint="50,000" android:background="@drawable/input_perfil_gris" android:paddingHorizontal="12dp" android:layout_marginBottom="15dp" android:textSize="14sp"/>
+
+                    <TextView android:text="Habilidades" android:textColor="#FF6A00" android:textStyle="bold" android:textSize="12sp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="8dp"/>
+                    <com.google.android.material.chip.ChipGroup android:layout_width="match_parent" android:layout_height="wrap_content" app:chipSpacingHorizontal="6dp">
+                        <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mecánica"/>
+                        <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Plomería"/>
+                        <com.google.android.material.chip.Chip android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Soldadura"/>
+                    </com.google.android.material.chip.ChipGroup>
+                </LinearLayout>
+            </FrameLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/barra_inferior_estandar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:elevation="12dp">
+
+        <LinearLayout android:id="@+id/nav_inicio" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/inicio" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_buscar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/buscarr" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Buscar" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_publicaciones" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/publicaciones" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Publicaciones" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_chat" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/chat" app:tint="#AAAAAA"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chat" android:textSize="10sp" android:textColor="#AAAAAA"/>
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_perfil" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true" android:focusable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/perfil" app:tint="#FF6A00"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textSize="10sp" android:textColor="#FF6A00" android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

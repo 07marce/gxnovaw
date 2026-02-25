@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F8F9FB"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/barra_inferior_estandar"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:background="#FFFFFF"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/chat"
+                    app:tint="#FF6A00" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:text="Mensajes"
+                    android:textColor="#333333"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="43dp"
+                android:text="3 mensajes sin leer"
+                android:textColor="#FF6A00"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/input_perfil_gris"
+                android:drawableStart="@android:drawable/ic_menu_search"
+                android:drawablePadding="10dp"
+                android:hint="Buscar conversaciones..."
+                android:paddingStart="15dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fondo_chat_blanco"
+                    android:padding="12dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+                    <RelativeLayout android:id="@+id/lay_carlos" android:layout_width="60dp" android:layout_height="60dp">
+                        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bd_rounded" android:backgroundTint="#FF6A00" />
+                        <ImageView android:layout_width="50dp" android:layout_height="50dp" android:layout_centerInParent="true" android:src="@drawable/perfil" />
+                    </RelativeLayout>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lay_carlos" android:layout_marginStart="12dp" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Carlos Martínez" android:textStyle="bold" android:textColor="#000000" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Desarrollo Web E-commerce" android:textStyle="bold" android:textColor="#FF6A00" android:textSize="11sp" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="¿Podríamos agendar una llamada?" android:textColor="#777777" android:textSize="13sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/fondo_chat_blanco"
+                    android:padding="12dp"
+                    android:elevation="2dp"
+                    android:layout_marginBottom="12dp">
+                    <RelativeLayout android:id="@+id/lay_ana" android:layout_width="60dp" android:layout_height="60dp">
+                        <View android:layout_width="match_parent" android:layout_height="match_parent" android:background="@drawable/bd_rounded" android:backgroundTint="#FF6A00" />
+                        <ImageView android:layout_width="50dp" android:layout_height="50dp" android:layout_centerInParent="true" android:src="@drawable/perfil" />
+                    </RelativeLayout>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/lay_ana" android:layout_marginStart="12dp" android:orientation="vertical">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ana López" android:textStyle="bold" android:textColor="#000000" />
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Diseño App Móvil" android:textColor="#FF6A00" android:textSize="11sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="He enviado mi propuesta" android:textColor="#777777" android:textSize="13sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/barra_inferior_estandar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:elevation="15dp"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout android:id="@+id/nav_inicio" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/inicio" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inicio" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_buscar" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/buscarr" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Buscar" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_publicaciones" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/publicaciones" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Publicaciones" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_chat" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/chat" app:tint="#FF6A00" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chat" android:textSize="10sp" android:textStyle="bold" android:textColor="#FF6A00" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_perfil" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:gravity="center" android:orientation="vertical" android:clickable="true">
+            <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/perfil" app:tint="#AAAAAA" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Perfil" android:textSize="10sp" android:textColor="#AAAAAA" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
