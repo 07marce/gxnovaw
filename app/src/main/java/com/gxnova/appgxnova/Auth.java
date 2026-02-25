@@ -45,8 +45,9 @@ public class Auth extends AppCompatActivity {
 
     private Button btnLogin, btnRegister;
     private TextView tabLogin, tabRegister, txtNombreCedula, txtNombreSelfie, txtNoCuenta;
-    private EditText regPass, regPassConfirm, editCorreo, editContrasena;
+    private EditText etEmailLogin, etPassLogin, etNombre, etApellido, etCelular, etEmailReg, regPass, regPassConfirm, editCorreo, editContrasena;
     private EditText regNombre, regCorreo, regTelefono, regCiudad, regPais;
+
     private LinearLayout layoutLogin, layoutRegister;
     private View indicatorLogin, indicatorRegister;
     private RelativeLayout areaCedula, areaSelfie;
@@ -261,6 +262,7 @@ public class Auth extends AppCompatActivity {
         regPass = findViewById(R.id.regPass);
         regPassConfirm = findViewById(R.id.regPassConfirm);
         txtNoCuenta = findViewById(R.id.txtNoCuenta);
+
         // Campos de login
         editCorreo = findViewById(R.id.editCorreo);
         editContrasena = findViewById(R.id.editContrasena);
