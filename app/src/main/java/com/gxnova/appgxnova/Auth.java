@@ -3,6 +3,7 @@ package com.gxnova.appgxnova;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+// Auth.java — FIXED: backend uses 'password' not 'contrasena'
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -89,9 +90,10 @@ public class Auth extends AppCompatActivity {
 
     private void doLogin() {
         String correo = editCorreo != null ? editCorreo.getText().toString().trim() : "";
-        String contrasena = editContrasena != null ? editContrasena.getText().toString() : "";
+        // FIXED: el backend espera el campo "password", no "contrasena"
+        String password = editContrasena != null ? editContrasena.getText().toString() : "";
 
-        if (correo.isEmpty() || contrasena.isEmpty()) {
+        if (correo.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Ingresa tu correo y contraseña", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -99,7 +101,7 @@ public class Auth extends AppCompatActivity {
         btnLogin.setEnabled(false);
         btnLogin.setText("Ingresando...");
 
-        AuthModels.LoginRequest body = new AuthModels.LoginRequest(correo, contrasena);
+        AuthModels.LoginRequest body = new AuthModels.LoginRequest(correo, password);
         apiService.login(body).enqueue(new Callback<AuthModels.LoginResponse>() {
             @Override
             public void onResponse(Call<AuthModels.LoginResponse> call, Response<AuthModels.LoginResponse> response) {
@@ -107,14 +109,27 @@ public class Auth extends AppCompatActivity {
                 btnLogin.setText("Ingresar");
                 if (response.isSuccessful() && response.body() != null) {
                     AuthModels.LoginResponse res = response.body();
-                    String rol = (res.usuario != null && res.usuario.rol != null) ? res.usuario.rol : "";
-                    int userId = (res.usuario != null) ? res.usuario.id : -1;
-                    String name = (res.usuario != null) ? res.usuario.nombre : "";
+                    // FIXED: usar UsuarioCompleto con getPrimerRol() para rolesAsignados[]
+                    AuthModels.UsuarioCompleto u = res.usuario;
+                    String rol = (u != null) ? u.getPrimerRol() : "";
+                    int userId = (u != null) ? u.id : -1;
+                    String name = (u != null && u.nombre != null) ? u.nombre : "";
                     sessionManager.saveSession(res.token, userId, name, rol);
                     startActivity(new Intent(Auth.this, Inicio.class));
                     finish();
                 } else {
-                    Toast.makeText(Auth.this, "Correo o contraseña incorrectos", Toast.LENGTH_SHORT).show();
+                    // Mostrar el mensaje real del servidor si existe
+                    String errorMsg = "Correo o contraseña incorrectos";
+                    try {
+                        if (response.errorBody() != null) {
+                            String rawError = response.errorBody().string();
+                            if (rawError.contains("message")) {
+                                errorMsg = rawError;
+                            }
+                        }
+                    } catch (Exception ignored) {
+                    }
+                    Toast.makeText(Auth.this, errorMsg, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -133,6 +148,7 @@ public class Auth extends AppCompatActivity {
             return;
         }
 
+        // FIXED: el campo en el backend se llama "password"
         String pass = regPass.getText().toString();
         String passConf = regPassConfirm.getText().toString();
         if (pass.isEmpty() || !pass.equals(passConf)) {
@@ -140,13 +156,13 @@ public class Auth extends AppCompatActivity {
             return;
         }
 
-        // Campos de texto obligatorios
+        // Campos obligatorios del backend: nombre, correo, password, telefono,
+        // rolNombre
         String nombre = regNombre != null ? regNombre.getText().toString().trim() : "";
         String correo = regCorreo != null ? regCorreo.getText().toString().trim() : "";
         String telefono = regTelefono != null ? regTelefono.getText().toString().trim() : "";
-        String ciudad = regCiudad != null ? regCiudad.getText().toString().trim() : "";
-        String pais = regPais != null ? regPais.getText().toString().trim() : "";
-        String busqueda = spinnerBusqueda.getSelectedItemPosition() == 1 ? "Trabajar" : "Contratar";
+        // rolNombre: "Trabajador" o "Empleador" según lo que eligió el usuario
+        String rolNombre = spinnerBusqueda.getSelectedItemPosition() == 0 ? "Trabajador" : "Empleador";
 
         if (nombre.isEmpty() || correo.isEmpty() || pass.isEmpty()) {
             Toast.makeText(this, "Completa los campos requeridos", Toast.LENGTH_SHORT).show();
@@ -160,17 +176,16 @@ public class Auth extends AppCompatActivity {
         RequestBody rbCorreo = toRequestBody(correo);
         RequestBody rbPass = toRequestBody(pass);
         RequestBody rbTelefono = toRequestBody(telefono);
-        RequestBody rbCiudad = toRequestBody(ciudad);
-        RequestBody rbPais = toRequestBody(pais);
-        RequestBody rbBusqueda = toRequestBody(busqueda);
+        RequestBody rbRol = toRequestBody(rolNombre); // campo "rolNombre" que espera el backend
 
         // Imágenes: si no se capturaron usamos archivos vacíos
         MultipartBody.Part partCedula = uriToMultipart(uriCedula, "foto_cedula");
         MultipartBody.Part partSelfie = uriToMultipart(uriSelfie, "selfie");
-        MultipartBody.Part partFotoPerfil = uriToMultipart(uriSelfie, "foto_perfil"); // reutiliza selfie si no hay foto
-                                                                                      // de perfil
+        MultipartBody.Part partFotoPerfil = uriToMultipart(uriSelfie, "foto_perfil");
 
-        apiService.register(rbNombre, rbCorreo, rbPass, rbTelefono, rbCiudad, rbPais, rbBusqueda,
+        // FIXED: coincide con la firma corregida en ApiService (password + rolNombre,
+        // sin ciudad/pais/busqueda)
+        apiService.register(rbNombre, rbCorreo, rbPass, rbTelefono, rbRol,
                 partCedula, partSelfie, partFotoPerfil)
                 .enqueue(new Callback<AuthModels.MessageResponse>() {
                     @Override
